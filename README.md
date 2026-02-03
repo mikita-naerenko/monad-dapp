@@ -1,6 +1,6 @@
-## Miner Front
+## Monad DApp
 
-Next.js 16 application structured with the Feature-Sliced Design (FSD) methodology for a modular mining dashboard. The stack is centered around Mantine for UI primitives, Wagmi and RainbowKit for EVM wallet connectivity, `axios` for HTTP, and automatic OpenAPI type generation.
+Next.js 16 application structured with the Feature-Sliced Design (FSD) methodology for a modular dashboard. The stack is centered around Mantine for UI primitives, Wagmi and RainbowKit for EVM wallet connectivity, `axios` for HTTP, and automatic OpenAPI type generation.
 
 ### Tech
 
