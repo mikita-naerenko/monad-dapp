@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+  width: 100%;
+  background: var(--background, rgba(28, 11, 64, 0.9));
+  border-radius: 16px;
+  overflow: hidden;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: var(--gradient, linear-gradient(135deg, #6E54FF 0%, #FF8EE4 100%));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+

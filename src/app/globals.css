@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0D0F1F;
+  --foreground: #0E091C;
+  --grid-color: #4A7A8C;
+  --falling-point-color: #00E6FF;
+  --primary-0: #f2f6ff;
+  --primary-1: #e1e6ff;
+  --primary-2: #bfc5ff;
+  --primary-3: #9aa2ff;
+  --primary-4: #7b85ff;
+  --primary-5: #626eff;
+  --primary-6: #4f5fff;
+  --primary-7: #4353f0;
+  --primary-8: #3a47d6;
+  --primary-9: #2a36a8;
+  --text-primary: #0E091C;
+  --text-secondary: #A1A1A1;
+  --brand-main: #6E54FF;
+  --accent: #FF8EE4;
+  --off-white: #FBFAF9;
+  --white: #FFFFFF;
+  --error: #FF5B45;
+  --border-main: #00000033;
+  --font-size-xxl: 32px;
+  --font-size-lg: 20px;
+  --font-size-md: 16px;
+  --font-size-xs: 12px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-grid: var(--grid-color);
+  --color-falling-point: var(--falling-point-color);
+  --color-primary-0: var(--primary-0);
+  --color-primary-1: var(--primary-1);
+  --color-primary-2: var(--primary-2);
+  --color-primary-3: var(--primary-3);
+  --color-primary-4: var(--primary-4);
+  --color-primary-5: var(--primary-5);
+  --color-primary-6: var(--primary-6);
+  --color-primary-7: var(--primary-7);
+  --color-primary-8: var(--primary-8);
+  --color-primary-9: var(--primary-9);
+  --color-text-primary: var(--text-primary);
+  --color-brand-main: var(--brand-main);
+  --color-white: var(--white);
+  --color-border-main: var(--border-main);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--off-white);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+body[data-loaded="false"] > *:not(#global-loader) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+body[data-loaded="true"] > * {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+body[data-loaded="false"] > * {
+  visibility: hidden;
+  opacity: 0;
+}
+
+@keyframes shine {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+[data-rk] a[href*="ethereum.org"],
+[data-rk] a[href*="learn"],
+[data-rk] [class*="rk-learnMore"],
+[data-rk] [class*="rk-getWallet"],
+[data-rk] [class*="rk-newToEthereum"] {
+  display: none !important;
 }
+
+[data-rk] div:has(> a[href*="ethereum.org"]),
+[data-rk] div:has(> a[href*="learn"]),
+[data-rk] p:has(+ a[href*="ethereum.org"]),
+[data-rk] p:has(+ a[href*="learn"]) {
+  display: none !important;
+}
+

@@ -1,0 +1,394 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+      "/api/leaderboard": {
+        "get": {
+          "operationId": "ApiController_getLeaderboard",
+          "summary": "Get leaderboard",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Number of entries (1-1000)",
+              "schema": {
+                "example": 100,
+                "type": "number"
+              }
+            },
+            {
+              "name": "offset",
+              "required": false,
+              "in": "query",
+              "description": "Pagination offset (0-100000)",
+              "schema": {
+                "example": 0,
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of users ordered by totalDeposited",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/LeaderboardEntryDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid pagination parameters"
+            }
+          },
+          "tags": [
+            "DApp API"
+          ]
+        }
+      },
+      "/api/leaderboard/{address}": {
+        "get": {
+          "operationId": "ApiController_getUserLeaderboardData",
+          "summary": "Get user position in leaderboard",
+          "parameters": [
+            {
+              "name": "address",
+              "required": true,
+              "in": "path",
+              "description": "Ethereum address of the user",
+              "schema": {
+                "example": "0x1234abcd5678ef901234abcd5678ef901234abcd",
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User statistics",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LeaderboardEntryDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid address format"
+            },
+            "404": {
+              "description": "User not found"
+            }
+          },
+          "tags": [
+            "DApp API"
+          ]
+        }
+      },
+      "/api/referrals/{address}": {
+        "get": {
+          "operationId": "ApiController_getUserReferrals",
+          "summary": "Get user referrals",
+          "parameters": [
+            {
+              "name": "address",
+              "required": true,
+              "in": "path",
+              "description": "Ethereum address of the referrer",
+              "schema": {
+                "example": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Referrals and reward statistics",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserReferralDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid address format"
+            }
+          },
+          "tags": [
+            "DApp API"
+          ]
+        }
+      },
+      "/api/tvl-chart": {
+        "get": {
+          "operationId": "ApiController_getTvlChart",
+          "summary": "Get TVL chart",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Maximum number of points (1-10000)",
+              "schema": {
+                "example": 1000,
+                "type": "number"
+              }
+            },
+            {
+              "name": "from",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "description": "Start date (ISO format)"
+            },
+            {
+              "name": "to",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "description": "End date (ISO format)"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "TVL snapshots for the selected range",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TvlDataPointDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid query parameters"
+            }
+          },
+          "tags": [
+            "DApp API"
+          ]
+        }
+      },
+      "/api/total-value-locked": {
+        "get": {
+          "operationId": "ApiController_getTotalValueLocked",
+          "summary": "Get Total Value Locked",
+          "description": "Returns cumulative total of all deposits that entered the contract",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Total Value Locked (cumulative deposits)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TotalValueLockedDto"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "DApp API"
+          ]
+        }
+      },
+      "/events": {
+        "get": {
+          "operationId": "SseGateway_stream",
+          "summary": "Subscribe to the server-sent events stream",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Event stream in Server-Sent Events format",
+              "content": {
+                "text/event-stream": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EventPayload"
+                  }
+                }
+              }
+            }
+          },
+          "tags": [
+            "Events"
+          ]
+        }
+      }
+    },
+    "info": {
+      "title": "DApp Backend API",
+      "description": "REST API documentation for the blockchain event indexer",
+      "version": "1.0.0",
+      "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+      "schemas": {
+        "LeaderboardEntryDto": {
+          "type": "object",
+          "properties": {
+            "rank": {
+              "type": "number",
+              "example": 1
+            },
+            "address": {
+              "type": "string",
+              "example": "0x1234abcd5678ef901234abcd5678ef901234abcd"
+            },
+            "totalDeposited": {
+              "type": "string",
+              "example": "150.42",
+              "description": "Total deposited amount (stringified Decimal)"
+            },
+            "totalWithdrawn": {
+              "type": "string",
+              "example": "50.00",
+              "description": "Total withdrawn amount (stringified Decimal)"
+            },
+            "totalCompounded": {
+              "type": "string",
+              "example": "75.12",
+              "description": "Total compounded amount (stringified Decimal)"
+            },
+            "totalCompoundCount": {
+              "type": "number",
+              "example": 12
+            },
+            "referralEarningsUnits": {
+              "type": "string",
+              "example": "24.5",
+              "description": "Referral earnings in contract units (stringified Decimal)"
+            },
+            "lastActiveAt": {
+              "type": "object",
+              "example": "2025-01-15T10:30:00.000Z",
+              "nullable": true,
+              "description": "ISO timestamp of last activity",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "rank",
+            "address",
+            "totalDeposited",
+            "totalWithdrawn",
+            "totalCompounded",
+            "totalCompoundCount",
+            "referralEarningsUnits",
+            "lastActiveAt"
+          ]
+        },
+        "UserReferralDto": {
+          "type": "object",
+          "properties": {
+            "referee": {
+              "type": "string",
+              "example": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+            },
+            "totalUnitsRewarded": {
+              "type": "string",
+              "example": "12.75",
+              "description": "Total reward units as string"
+            },
+            "lastRewardAt": {
+              "type": "object",
+              "example": "2025-01-15T10:30:00.000Z",
+              "nullable": true,
+              "format": "date-time"
+            },
+            "totalRewards": {
+              "type": "number",
+              "example": 5
+            },
+            "buyAmount": {
+              "type": "string",
+              "example": "150.42",
+              "description": "Total amount of tokens bought by referee (stringified Decimal)"
+            }
+          },
+          "required": [
+            "referee",
+            "totalUnitsRewarded",
+            "lastRewardAt",
+            "totalRewards",
+            "buyAmount"
+          ]
+        },
+        "TvlDataPointDto": {
+          "type": "object",
+          "properties": {
+            "timestamp": {
+              "type": "string",
+              "example": "2025-01-15T10:30:00.000Z",
+              "description": "ISO timestamp of snapshot",
+              "format": "date-time"
+            },
+            "tvl": {
+              "type": "string",
+              "example": "1000.5",
+              "description": "Total value locked in ETH (string)"
+            }
+          },
+          "required": [
+            "timestamp",
+            "tvl"
+          ]
+        },
+        "TotalValueLockedDto": {
+          "type": "object",
+          "properties": {
+            "totalDeposited": {
+              "type": "string",
+              "example": "5000.123",
+              "description": "Cumulative total of all deposits that entered the contract (stringified Decimal)"
+            }
+          },
+          "required": [
+            "totalDeposited"
+          ]
+        },
+        "EventPayload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "user:update",
+              "description": "Event type (e.g. user:update, tvl:update)"
+            },
+            "data": {
+              "type": "object",
+              "description": "Arbitrary event payload",
+              "additionalProperties": true,
+              "example": {
+                "address": "0x1234abcd5678ef901234abcd5678ef901234abcd",
+                "weekStart": "2025-01-13T00:00:00.000Z"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "data"
+          ]
+        }
+      }
+    }
+  }

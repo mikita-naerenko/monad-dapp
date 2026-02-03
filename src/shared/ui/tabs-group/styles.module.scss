@@ -1,0 +1,39 @@
+
+
+.list {
+  position: relative;
+  border: 1px solid #0E091C33;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.indicator {
+  border-radius: 12px;
+  border: 1px solid #8a7bff;
+  background: #6855EF;
+}
+
+.tab {
+  z-index: 1;
+  font-weight: 500;
+  transition: color 100ms ease;
+  color: #0E091C;
+  background: transparent;
+
+  &[data-active] {
+    color: #ffffff;
+    background: transparent;
+  }
+}
+
+.indicatorLeft {
+  border-radius: 12px 0 0 12px;
+}
+
+.indicatorRight {
+  border-radius: 0 12px 12px 0;
+}
+
+.indicatorMiddle {
+  border-radius: 0;
+}

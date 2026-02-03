@@ -1,0 +1,11 @@
+.no_hover {
+    &:hover {
+      background-color: transparent !important;
+      opacity: 0.8 !important;
+    }
+  
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }

@@ -1,0 +1,93 @@
+.container {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #F8F7F6;
+}
+
+.container :global(.mantine-ScrollArea-scrollbar) {
+  background: transparent;
+}
+
+.container :global(.mantine-ScrollArea-scrollbar[data-orientation="vertical"]) {
+  top: 33px;
+}
+
+.container :global(.mantine-ScrollArea-thumb) {
+  background: #A1A1A1;
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  transition: background-color 120ms ease;
+}
+
+.container :global(.mantine-ScrollArea-thumb:hover),
+.container :global(.mantine-ScrollArea-thumb[data-hovered]) {
+  background: #6E6E6E;
+}
+
+.container :global([data-sticky] .mantine-Table-th) {
+  background: #F8F7F6;
+  z-index: 5;
+  top: 0;
+  position: sticky;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table {
+  --table-border-color: rgba(0, 0, 0, 0.2);
+  --table-layout: auto;
+  --table-caption-side: bottom;
+  // --table-horizontal-spacing: var(--mantine-spacing-xl);
+  --table-vertical-spacing: var(--mantine-spacing-sm);
+  --table-striped-color: var(--mantine-color-gray-0);
+  --table-highlight-on-hover-color: var(--mantine-color-gray-1);
+  --table-sticky-header-offset: 0;
+  background-color: #F8F7F6;
+}
+
+.thead {
+}
+
+.thead .tr {
+  border: none;
+}
+
+.tbody {
+}
+
+.tfoot {
+}
+
+.tr {
+}
+
+.th {
+  color: #A1A1A1;
+  font-size: 12px;
+  font-weight: 500 !important;
+}
+
+.td {
+  color: #0E091C;
+}
+
+.caption {
+}
+
+.th:nth-child(1),
+.td:nth-child(1) {
+  text-align: left;
+}
+
+.th:nth-child(2),
+.td:nth-child(2) {
+  text-align: center;
+}
+
+.th:nth-child(3),
+.td:nth-child(3) {
+  text-align: right;
+}
